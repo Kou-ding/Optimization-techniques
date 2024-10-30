@@ -19,18 +19,23 @@ a = linspace(1, 20, 7)';
 
 % custom data
 b = zeros(1,3);
-for i = 1:3
-    b(i) = 2*i + 1;
+for i = 2:3
+    b(1,i) = 2*i + 1;
+    disp("hello");
 end
 
 % ones, zeros, rand
 a = [1 2; 3 4];
 a = ones(4,6);
 a = zeros(4,6);
+%% test
 a = 4*rand(4,6);
+hy = rand(1,1);
+c = rand(1,1);
+
 eye(3);
 eye(3,4);
-
+%% end
 % call of array elements
 a(1,2)
 a(1,[1 2])
@@ -38,13 +43,13 @@ a(1,[1 3])
 a(1,1:3)
 a(a < 0.6)
 a < 1.2
-
+%% test1
 for i = 1:3 % rows 
     for j = 1:2 % columns
         c(i,j) = 2*i + 1;
     end
 end
-
+%% end1
 % operations between matrices 
 k*vector
 k*Array
@@ -125,7 +130,7 @@ solve(f2(x,y) == 0, y)
 ft = @(t) sin(t);
 gt = @(t) cos(2*t);
 time = linspace(0,10,100);
-
+%% edn
 figure;
 plot(time, ft(time), 'LineStyle', '--', 'LineWidth', 2.5);
 hold on
@@ -202,3 +207,4 @@ zlabel('z','FontSize',22);
 function y = auxiliaryfunc(a,b)
     y = a + b;
 end
+auxiliaryfunc(1,2)
