@@ -1,0 +1,61 @@
+% Document class and two-column conversion
+\documentclass[twocolumn]{report}
+% dimensions of paper and relative text positioning
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+% package for including URLs
+\usepackage{url}
+% Required for including images
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt} % Removes all indentation from paragraphs
+
+% Start of the document
+\begin{document}
+
+% Title page
+\title{\Huge \bfseries Optimization techniques: First Assignment} %\Huge and \bfseries are used to make the title bigger and bold
+\author{Konstantinos Fotios Papadakis\vspace{0.5cm} \\  AEM:10371} % \vspace{0.5cm} is used to add some vertical space between the author and the AEM
+\date{\today}
+% prints the title, author and date on a separate page
+\maketitle
+
+% Table of contents page
+\tableofcontents
+
+% Dichotomy
+\chapter{Problem 1}
+\section{Prompt}
+\input{sections/dichotomyPrompt}
+\section{Solution}
+\input{sections/dichotomy}
+
+% Golden section 
+\chapter{Problem 2}
+\section{Prompt}
+\input{sections/goldensectionPrompt}
+\section{Solution}
+\input{sections/goldensection}
+
+% FIbonacci 
+\chapter{Problem 3}
+\section{Prompt}
+\input{sections/fibonacciPrompt}
+\section{Solution}
+\input{sections/fibonacci}
+
+% Dichotomy 2
+\chapter{Problem 4}
+\section{Prompt}
+\input{sections/dichotomy2Prompt}
+\section{Solution}
+\input{sections/dichotomy2}
+
+% Bibliography
+\nocite{*} % Include all references in the bibliography, even if they are not cited in the report
+\bibliographystyle{plain}
+\renewcommand{\bibname}{Bibliography}
+\bibliography{references/references} % We have to include the references somewhere in the report for them to show here if we don't use (\nocite{*})
+\addcontentsline{toc}{chapter}{\bibname}
+
+% End of the document
+\end{document}
