@@ -1,0 +1,11 @@
+Algorithm intuition:
+
+
+Algorithm Steps:
+\begin{enumerate}
+    \item We check whether $b - a < l$. If it is, we stop the process.
+    \item If it is not, we set $x1=\frac{a+b}{2}-\epsilon$ and $x2=\frac{a+b}{2}+\epsilon$.
+    \item If $f(x1) < f(x2)$, we set $a_(k+1)=a_k$ and $b_(k+1)=x_(2k)$.
+    \item If not we set $a_(k+1)=x_(1k)$ and $b_(k+1)=b_k$.
+    \item After setting $k=k+1$, we repeat the process until $b_k - a_k < l$.
+\end{enumerate}
