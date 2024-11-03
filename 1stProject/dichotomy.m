@@ -12,7 +12,8 @@ f=f1;
 a = -1;
 b = 3;
 l = 0.01;        % Desired accuracy
-delta = 1e-5;    % Small tolerance for dichotomy
+epsilon = 0.001;    % Small tolerance for dichotomy
+count = 0;      % Counter for the number of iterations
 
 % Iterative search
 while (b - a) > l
@@ -20,8 +21,8 @@ while (b - a) > l
     m = (a + b) / 2;
     
     % Calculate x1 and x2 close to the midpoint m
-    x1 = m - delta;
-    x2 = m + delta;
+    x1 = m - epsilon;
+    x2 = m + epsilon;
     
     % Evaluate function at x1 and x2
     f_x1 = f(x1);
@@ -33,10 +34,14 @@ while (b - a) > l
     else
         a = m;  % Keep the right half
     end
+    count = count + 1;
 end
 
 % Output the result
 minimum_x = (a + b) / 2;
 minimum_f = f(minimum_x);
 
-fprintf('The minimum value of f(x) is approximately %.5f at x = %.5f\n', minimum_f, minimum_x);
+fprintf('Approximate minimum value: %.5f at x = %.5f\n', minimum_f, minimum_x);
+fprintf('Number of iterations: %d\n', count);
+fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
+
