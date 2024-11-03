@@ -2,7 +2,7 @@ TEX_MAIN = optimization1.tex
 
 all: optimization1
 
-report: $(TEX_MAIN)
+optimization1: $(TEX_MAIN)
 	latexmk -pdf  $(TEX_MAIN) 
 
 clean:
