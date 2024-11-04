@@ -7,14 +7,19 @@
 % Required for including images
 \usepackage{graphicx}
 
+% enable writing in greek
+\usepackage[greek]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[LGR]{fontenc}
+
 \setlength{\parindent}{0pt} % Removes all indentation from paragraphs
 
 % Start of the document
 \begin{document}
 
 % Title page
-\title{\Huge \bfseries Optimization techniques \\ First Assignment} %\Huge and \bfseries are used to make the title bigger and bold
-\author{Konstantinos Fotios Papadakis\vspace{0.5cm} \\  AEM:10371} % \vspace{0.5cm} is used to add some vertical space between the author and the AEM
+\title{\Huge \bfseries Τεχνικές Βελτιστοποίησης \\ Πρώτο Παραδοτέο} %\Huge and \bfseries are used to make the title bigger and bold
+\author{Παπαδάκης Κωνσταντίνος Φώτιος\vspace{0.5cm} \\  ΑΕΜ:10371} % \vspace{0.5cm} is used to add some vertical space between the author and the AEM
 \date{\today}
 % prints the title, author and date on a separate page
 \maketitle
@@ -22,39 +27,44 @@
 % Table of contents page
 \tableofcontents
 
+% General introduction
+\chapter{Εισαγωγή}
+\section{Γενικά}
+\input{sections/general}
+
 % Dichotomy
-\chapter{Problem 1}
-\section{Prompt}
+\chapter{Θέμα 1}
+\section{Εκφώνηση}
 \input{sections/dichotomyPrompt}
-\section{Solution}
+\section{Λύση}
 \input{sections/dichotomy}
 
 % Golden section 
-\chapter{Problem 2}
-\section{Prompt}
+\chapter{Θέμα 2}
+\section{Εκφώνηση}
 \input{sections/goldensectionPrompt}
-\section{Solution}
+\section{Λύση}
 \input{sections/goldensection}
 
 % FIbonacci 
-\chapter{Problem 3}
-\section{Prompt}
+\chapter{Θέμα 3}
+\section{Εκφώνηση}
 \input{sections/fibonacciPrompt}
-\section{Solution}
+\section{Λύση}
 \input{sections/fibonacci}
 
 % Dichotomy 2
-\chapter{Problem 4}
-\section{Prompt}
+\chapter{Θέμα 4}
+\section{Εκφώνηση}
 \input{sections/dichotomy2Prompt}
-\section{Solution}
+\section{Λύση}
 \input{sections/dichotomy2}
 
 % Comparison
-\chapter{Analysis}
-\section{Comparison of the methods}
+\chapter{Ανάλυση Αποτελεσμάτων}
+\section{Σύγκριση Μεθόδων}
 \input{sections/comparison}
-\section{Comments}
+\section{Σχόλια}
 \input{sections/comments}
 
 % Bibliography

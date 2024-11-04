@@ -1,11 +1,18 @@
-Algorithm intuition:
+Κατανόηση Αλγορίθμου
 
+Χωρίζουμε το αρχικό μας χωρίο σε τρία ανισομερή υπό-διαστήματα χρησιμοποιώντας τα σημεία $x1$ και $x2$.
+To determine the correct subinterval to commence our new search we use the Θεώρημα 5.1.1 του βιβλίου.
+Σύμφωνα με αυτό, αν μια συνάρτηση $f$ είναι \textbf{αυστηρά σχεδόν κυρτή} σε ένα διάστημα $[a,b]$
+όπου $x_1,x_2 \epsilon[a,b]$ και $a < x_1 < x_2 < b$, τότε αν $f(x_1)<f(x_2)$, $f(x)>=f(x_1)$ για κάθε
+$x \epsilon [x_2,b]$. Ομοίως, αν $f(x_1)>=f(x_2)$, $f(x)>=f(x_2)$ για κάθε $x \epsilon [a,x_1]$.
 
-Algorithm Steps:
+Βήματα Αλγορίθμου:
 \begin{enumerate}
-    \item We check whether $b - a < l$. If it is, we stop the process.
-    \item If it is not, we set $x1=\frac{a+b}{2}-\epsilon$ and $x2=\frac{a+b}{2}+\epsilon$.
-    \item If $f(x1) < f(x2)$, we set $a_(k+1)=a_k$ and $b_(k+1)=x_(2k)$.
-    \item If not we set $a_(k+1)=x_(1k)$ and $b_(k+1)=b_k$.
-    \item After setting $k=k+1$, we repeat the process until $b_k - a_k < l$.
+    \item Ελέγχουμε αν $b - a < l$. Αν ισχύει, σταματάμε την αναζήτηση.
+    \item Στην περίπτωση που δεν ισχύει, θέτουμε $x1=\frac{a+b}{2}-\epsilon$ και
+    $x2=\frac{a+b}{2}+\epsilon$.
+    \item Αν $f(x_1) < f(x_2)$, θέτουμε $a_{k+1}=a_k$ και $b_{k+1}=x_{2k}$.
+    \item Αλλιώς θέτουμε $a_(k+1)=x_(1k)$ και $b_(k+1)=b_k$.
+    \item Μεταβαίνουμε στην επόμενη επανάληψη του αλγορίθμου $k=k+1$ και σταματάμε όταν
+    $b_k - a_k < l$.
 \end{enumerate}
