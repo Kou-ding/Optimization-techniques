@@ -34,7 +34,7 @@ function y = dichotomyFunc(f,l,epsilon)
         else
             a = x1;  % Keep the right half
         end
-        count = count + 2; % here we count function evaluations
+        count = count + 1; % here we count iterations
     end
 
     % Output the result
@@ -47,20 +47,3 @@ function y = dichotomyFunc(f,l,epsilon)
 
     y = count;
 end
-
-% Function calculation count vs. epsilon
-i_values = 0.00001:0.00001:0.004999999; % The range of i values
-fcount_values = zeros(size(i_values)); % Preallocate for efficiency
-
-for idx = 1:length(i_values)
-    i = i_values(idx);
-    fcount_values(idx) = dichotomyFunc(f1,0.01,i);
-end
-
-% Plot
-plot(i_values, fcount_values, 'b-', 'LineWidth', 1.5);
-xlabel('epsilon');
-ylabel('f calc count');
-title('Dichotomy Method');
-grid on;
-

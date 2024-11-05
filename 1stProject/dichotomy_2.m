@@ -48,18 +48,18 @@ function y = dichotomyFunc(f,l,epsilon)
     y = count;
 end
 
-% Function calculation count vs. epsilon
-i_values = 0.00001:0.00001:0.004999999; % The range of i values
-fcount_values = zeros(size(i_values)); % Preallocate for efficiency
+% Function calculation count vs. lambda
+l_values = 0.0021:0.01:1; % The range of l values
+fcount_values = zeros(size(l_values)); % Preallocate for efficiency
 
-for idx = 1:length(i_values)
-    i = i_values(idx);
-    fcount_values(idx) = dichotomyFunc(f1,0.01,i);
+for idx = 1:length(l_values)
+    l = l_values(idx);
+    fcount_values(idx) = dichotomyFunc(f1,l,0.001);
 end
 
 % Plot
-plot(i_values, fcount_values, 'b-', 'LineWidth', 1.5);
-xlabel('epsilon');
+plot(l_values, fcount_values, 'b-', 'LineWidth', 1.5);
+xlabel('lambda');
 ylabel('f calc count');
 title('Dichotomy Method');
 grid on;

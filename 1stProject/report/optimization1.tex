@@ -17,6 +17,9 @@
 % Start of the document
 \begin{document}
 
+% Set the language to greek
+\selectlanguage{greek}
+
 % Title page
 \title{\Huge \bfseries Τεχνικές Βελτιστοποίησης \\ Πρώτο Παραδοτέο} %\Huge and \bfseries are used to make the title bigger and bold
 \author{Παπαδάκης Κωνσταντίνος Φώτιος\vspace{0.5cm} \\  ΑΕΜ:10371} % \vspace{0.5cm} is used to add some vertical space between the author and the AEM
@@ -70,9 +73,8 @@
 % Bibliography
 \nocite{*} % Include all references in the bibliography, even if they are not cited in the report
 \bibliographystyle{plain}
-\renewcommand{\bibname}{Bibliography}
 \bibliography{references/references} % We have to include the references somewhere in the report for them to show here if we don't use (\nocite{*})
-\addcontentsline{toc}{chapter}{\bibname}
+\addcontentsline{toc}{chapter}{\bibname} % Add the bibliography to the table of contents
 
 % End of the document
 \end{document}
