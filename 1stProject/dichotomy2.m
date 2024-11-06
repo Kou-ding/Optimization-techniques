@@ -8,44 +8,75 @@ f2 = exp(-2 * x) + (x - 2)^2;
 % Define f3(x)
 f3 = exp(x) * (x^3 - 1) + (x - 1) * sin(x);
 
-% Define the function f(x) and its derivative f'(x)
-f = f1;
-df = diff(f,x);
+% Dichotomy method(with derivatives) for finding the minimum of a function
+function iter = dichotomy2Func(f, l)
+    % Derivative of the function
+    df = diff(f);
+    % Convert symbolic expressions to functions handle
+    f = matlabFunction(f);
+    df = matlabFunction(df);
 
-f = matlabFunction(f); % Convert symbolic expression to function handle
-df = matlabFunction(df); % Convert symbolic expression to function handle
+    % Initialize the interval and tolerance
+    a = -1;
+    b = 3;
 
-% Initialize the interval and tolerance
-a = -1;
-b = 3;
-l = 0.01;  % Desired accuracy
-count = 0; % Counter for the number of iterations
-
-% Iterative search using the dichotomy method with derivative
-while (b - a) > l
-    % Compute the midpoint
-    mid = (a + b) / 2;
+    % Initialize the minimum values
+    minimum_x = 0; 
+    minimum_f = 0;
     
-    % Evaluate the function and its derivative at the midpoint
-    f_mid = f(mid);
-    df_mid = df(mid);
-    
-    % Check the derivative to determine the direction
-    if df_mid > 0
-        % If derivative is positive, move left
-        b = mid;  % New interval is [a, mid]
-    else
-        % If derivative is negative or zero, move right
-        a = mid;  % New interval is [mid, b]
+    count = 0; % Counter for the number of iterations
+
+    % Iterative search using the dichotomy method with derivative
+    while (b - a) > l
+        % Compute the midpoint
+        mid = (a + b) / 2;
+        
+        % Evaluate the function's derivative at the midpoint
+        df_mid = df(mid);
+        
+        % Check the derivative to determine the direction
+        if df_mid > 0
+            % If derivative is positive, move left
+            b = mid;  % New interval is [a, mid]
+        elseif df_mid < 0
+            % If derivative is negative, move right
+            a = mid;  % New interval is [mid, b]
+        else
+            % If derivative is zero, the minimum is found
+            minimum_x = mid;
+            minimum_f = f(mid);
+        end
+        count = count + 2;
     end
-    count = count + 1;
+
+    % Calculate the approximate minimum
+    % (if we failed to hit the df=0 point) 
+    if minimum_x == 0
+        minimum_x = (a + b) / 2;
+    end
+    if minimum_f == 0
+        minimum_f = f(minimum_x);
+    end
+
+    % Display results
+    fprintf('Approximate minimum: f(%.5f) = %.5f\n', minimum_x, minimum_f);
+    fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
+
+    iter = count;
 end
 
-% Calculate the approximate minimum
-minimum_x = (a + b) / 2;
-minimum_f = f(minimum_x);
+% Function calculation count vs. l
+l_values = 0.0021:0.01:1; % The range of l values
+fcount_values = zeros(size(l_values)); % Preallocate for efficiency
 
-% Display results
-fprintf('Approximate minimum value: %.5f at x = %.5f\n', minimum_f, minimum_x);
-fprintf('Number of iterations: %d\n', count);
-fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
+for idx = 1:length(l_values)
+    l = l_values(idx);
+    fcount_values(idx) = dichotomy2Func(f1,l);
+end
+
+% Plot
+plot(l_values, fcount_values, 'b-', 'LineWidth', 1.5);
+xlabel('l');
+ylabel('df calc count');
+title('Dichotomy Method(with derivatives)');
+grid on;

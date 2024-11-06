@@ -13,7 +13,7 @@ function y = dichotomyFunc(f,l,epsilon)
     % Initialize the interval and tolerance parameters
     a = -1;
     b = 3;
-    count = 0;      % Counter for the number of iterations
+    fcount = 0;      % Counter for the number of iterations
 
     % Iterative search
     while (b - a) > l
@@ -34,7 +34,7 @@ function y = dichotomyFunc(f,l,epsilon)
         else
             a = x1;  % Keep the right half
         end
-        count = count + 2; % here we count function evaluations
+        fcount = fcount + 2; % here we count function evaluations
     end
 
     % Output the result
@@ -42,10 +42,9 @@ function y = dichotomyFunc(f,l,epsilon)
     minimum_f = f(minimum_x);
 
     fprintf('Approximate minimum value: %.5f at x = %.5f\n', minimum_f, minimum_x);
-    fprintf('Number of iterations: %d\n', count);
     fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
 
-    y = count;
+    y = fcount;
 end
 
 % Function calculation count vs. epsilon

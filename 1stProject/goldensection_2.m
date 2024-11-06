@@ -6,7 +6,7 @@ f2 = @(x) exp(-2 * x) + (x - 2)^2;
 f3 = @(x) exp(x) * (x^3 - 1) + (x - 1) * sin(x);
 
 % Golden section method for finding the minimum of a function
-function y = goldenFunc(f,l)
+function [count_values, a_values, b_values] = goldenFunc(f,l)
     % Initialize the interval and tolerance parameters
     a = -1;
     b = 3;
@@ -15,11 +15,17 @@ function y = goldenFunc(f,l)
     gamma = 0.618; 
 
     % Counter for the number of iterations
-    fcount = 0;
+    count = 0;
 
     % Compute initial interior points
     x1 = a + (1 - gamma) * (b - a);
     x2 = a + gamma * (b - a);
+
+    % Preallocate arrays with a row vector structure for efficiency
+    max_iterations = 100;  % Adjust this based on expected iteration count
+    count_values = zeros(1, max_iterations);
+    a_values = zeros(1, max_iterations);
+    b_values = zeros(1, max_iterations);
 
     % Iterative search
     while (b - a) > l
@@ -32,14 +38,25 @@ function y = goldenFunc(f,l)
             a = x1;    
             x1 = x2;  
             x2 = a + gamma*(b-a);  
-            
         else
             b = x2; 
             x2 = x1;      
             x1 = a + (1 - gamma)*(b - a); 
         end
-        fcount = fcount + 2; % here we count function evaluations
+
+        % Store the current iteration count and interval limits
+        count_values(count + 1) = count;
+        a_values(count + 1) = a;
+        b_values(count + 1) = b;
+
+        % Increment the iteration counter
+        count = count + 1; % here we count function evaluations
     end
+
+    % Trim the unused preallocated array space
+    count_values = count_values(1:count);
+    a_values = a_values(1:count);
+    b_values = b_values(1:count); 
 
     % Output the result
     minimum_x = (a + b) / 2;
@@ -47,23 +64,18 @@ function y = goldenFunc(f,l)
 
     fprintf('Approximate minimum value: f(%.5f) = %.5f\n', minimum_x, minimum_f);
     fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
-
-    y = fcount;
 end
 
-% Function calculation count vs. l
-l_values = 0.0021:0.01:1; % The range of l values
-fcount_values = zeros(size(l_values)); % Preallocate for efficiency
-
-for idx = 1:length(l_values)
-    l = l_values(idx);
-    fcount_values(idx) = goldenFunc(f3,l);
-end
+% Call goldenFunc and retrieve iteration data
+[count_values, a_values, b_values] = goldenFunc(f3,0.5);
 
 % Plot
-plot(l_values, fcount_values, 'b-', 'LineWidth', 1.5);
-xlabel('l');
-ylabel('f calc count');
-title('Golden section Method');
+plot(count_values, a_values, 'b-', 'LineWidth', 1.5);
+hold on;
+plot(count_values, b_values, 'r-', 'LineWidth', 1.5);
+xlabel('Iteration');
+ylabel('Interval limits');
+title('Golden section Method (l = 0.5)');
+legend('a', 'b');
 grid on;
-
+hold off;
