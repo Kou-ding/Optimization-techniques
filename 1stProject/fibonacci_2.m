@@ -6,7 +6,7 @@ f2 = @(x) exp(-2 * x) + (x - 2)^2;
 f3 = @(x) exp(x) * (x^3 - 1) + (x - 1) * sin(x);
 
 
-function fcount = fibonacciFunc(f, l)
+function [count_values, a_values, b_values] = fibonacciFunc(f, l)
     % fibonacci_min: Finds the minimum of a function in a given interval
     % using the Fibonacci search algorithm.
     %
@@ -23,9 +23,12 @@ function fcount = fibonacciFunc(f, l)
     a = -1;
     b = 3;
 
-    % Counter for the number of function evaluations
-    fcount = 0;      
-    
+    % Preallocate arrays with a row vector structure for efficiency
+    max_iterations = 100;  % Adjust this based on expected iteration count
+    count_values = zeros(1, max_iterations);
+    a_values = zeros(1, max_iterations);
+    b_values = zeros(1, max_iterations);
+
     % Initialize the Fibonacci sequence
     n = 1;
     F = [1, 1]; % Initialize the first two Fibonacci numbers
@@ -44,8 +47,7 @@ function fcount = fibonacciFunc(f, l)
     % Evaluate the function at initial points
     f1 = f(x1);
     f2 = f(x2);
-    fcount = fcount + 2;
-
+    
     % Main loop
     while k < n-1
         if f1 > f2
@@ -57,7 +59,6 @@ function fcount = fibonacciFunc(f, l)
             % Update x2 based on the Fibonacci numbers
             x2 = a + F(n-k) / F(n-k+1) * (b - a);
             f2 = f(x2);
-            fcount = fcount + 1;
         else
             % Move the interval to the left
             b = x2;
@@ -67,9 +68,15 @@ function fcount = fibonacciFunc(f, l)
             % Update x1 based on the Fibonacci numbers
             x1 = a + F(n-k-1) / F(n-k+1) * (b - a);
             f1 = f(x1);
-            fcount = fcount + 1;
         end
-        k = k + 1;
+
+        % Store the current iteration count and interval limits
+        count_values(k) = k;
+        a_values(k) = a;
+        b_values(k) = b;
+
+        % Increment the iteration counter
+        k = k + 1; % here we count iterations
     end
     
     % Determine the final x value where the minimum occurs
@@ -81,22 +88,26 @@ function fcount = fibonacciFunc(f, l)
         fmin = f2;
     end
 
+    % Trim the unused preallocated array space
+    count_values = count_values(1:k-1);
+    a_values = a_values(1:k-1);
+    b_values = b_values(1:k-1);
+
+    % Output the result
     fprintf('Approximate minimum value: f(%.5f) = %.5f\n', xmin, fmin);
     fprintf('Interval [a,b]: [%.5f,%.5f]\n', a, b);
 end
 
-% Function calculation count vs. l
-l_values = 0.0021:0.01:1; % The range of l values
-fcount_values = zeros(size(l_values)); % Preallocate for efficiency
-
-for idx = 1:length(l_values)
-    l = l_values(idx);
-    fcount_values(idx) = fibonacciFunc(f1,l);
-end
+% Call dichotomyFunc and retrieve iteration data
+[count_values, a_values, b_values] = fibonacciFunc(f1,0.5);
 
 % Plot
-plot(l_values, fcount_values, 'b-', 'LineWidth', 1.5);
-xlabel('l');
-ylabel('f calc count');
-title('Fibonacci Method');
+plot(count_values, a_values, 'b-', 'LineWidth', 1.5);
+hold on;
+plot(count_values, b_values, 'r-', 'LineWidth', 1.5);
+xlabel('Iteration');
+ylabel('Interval limits');
+title('Fibonacci Method (l = 0.5)');
+legend('a', 'b');
 grid on;
+hold off;
