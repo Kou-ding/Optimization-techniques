@@ -1,5 +1,5 @@
 % Document class and two-column conversion
-\documentclass[twocolumn]{report}
+\documentclass{report}
 % dimensions of paper and relative text positioning
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
 % package for including URLs
@@ -34,30 +34,61 @@
 % General introduction
 \chapter{Εισαγωγή}
 \section{Γενικά}
+Η συνάρτηση πάνω στην οποία θα δουλέψουμε είναι η εξής:
+$$f(x) = x^5 e^{-x^2-y^2}$$
+Χρησιμοποιώντας ένα απλό visualization script σε Matlab εξάγουμε την παρακάτω εικόνα:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{media/visualization.png}
+    \caption{Οπτικοποίηση της συνάρτησης $f(x,y)$}
+\end{figure}
+Ο τρόπος με τον οποίο εστιάσαμε σε αυτά τα χωρία $x$, $y$ είναι μέσω . 
 
+Πρώτη Μερική Παράγωγος:
+\begin{itemize}
+    \item Ως προς το $x$:
+    $$\frac{\partial{z}}{\partial{x}} = 5x^4e^{-x^2-y^2} - 2x^6e^{-x^2-y^2}$$
+    $$\frac{\partial{z}}{\partial{x}} = x^4(5-2x^2)e^{-x^2-y^2}$$
+    \item Ως προς το $y$:
+    $$\frac{\partial{z}}{\partial{y}} = -2x^{5}ye^{-x^2-y^2}$$
 
-% Dichotomy
+\end{itemize}
+
+Δεύτερη Μερική Παράγωγος:
+\begin{itemize}
+    \item Ως προς το $x$:
+    $$\frac{\partial^2{z}}{\partial{x^2}} = 20x^{3}e^{-x^2-y^2}-22x^{5}e^{-x^2-y^2}+4x^{7}e^{-x^2-y^2}$$
+    $$\frac{\partial^2{z}}{\partial{x^2}} = (20x^3 -22x^5 +4x^7)e^{-x^2-y^2}$$
+    $$\frac{\partial^2{z}}{\partial{x^2}} = 2x^3(10-11x^2+2x^4)e^{-x^2-y^2}$$
+    $$\frac{\partial^2{z}}{\partial{x^2}} = 2x^3(2x^2-1)(x^2-10)e^{-x^2-y^2}$$
+    \item Ως προς το $y$:
+    $$\frac{\partial^2{z}}{\partial{y^2}} = 4x^{5}y^{2}e^{-x^2-y^2} - 2x^{5}e^{-x^2-y^2}$$
+    $$\frac{\partial^2{z}}{\partial{y^2}} = 2x^{5}(2y^2-1)e^{-x^2-y^2}$$
+\end{itemize}
+
+% Visualization of the function
 \chapter{Θέμα 1}
 \section{Εκφώνηση}
-
+Σχεδιάστε την $f$ για να πάρετε μια γενική εικόνα της μορφής της.
 \section{Λύση}
 
 
-% Golden section 
+
+%  
 \chapter{Θέμα 2}
 \section{Εκφώνηση}
 
 \section{Λύση}
 
 
-% FIbonacci 
+% 
 \chapter{Θέμα 3}
 \section{Εκφώνηση}
 
 \section{Λύση}
 
 
-% Dichotomy 2
+% 
 \chapter{Θέμα 4}
 \section{Εκφώνηση}
 
