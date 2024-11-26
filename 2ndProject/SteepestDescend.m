@@ -1,13 +1,10 @@
-% Steepest Descent Algorithm for minimizing f(X, Y)
-% f(X,Y) = X^5 * exp(-X^2 - Y^2)
-
 clc; clear;
 
 % Define the function and its gradient
-f = @(X, Y) X.^5 .* exp(-X.^2 - Y.^2);
+f = @(X, Y) X^5 * exp(-X^2 - Y^2);
 grad_f = @(X, Y) [
-    (5 * X.^4 - 2 * X.^6) .* exp(-X.^2 - Y.^2);   % Partial derivative w.r.t. X
-    -2 * Y .* X.^5 .* exp(-X.^2 - Y.^2)           % Partial derivative w.r.t. Y
+    (5 * X^4 - 2 * X^6) * exp(-X^2 - Y^2);   % Partial derivative w.r.t. X
+    -2 * Y * X^5 * exp(-X^2 - Y^2)           % Partial derivative w.r.t. Y
 ];
 
 % Initial points

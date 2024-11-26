@@ -1,14 +1,15 @@
 clc; clear;
 
 % Define the function, its gradient, and its Hessian
-f = @(X, Y) X.^5 .* exp(-X.^2 - Y.^2);
+f = @(X, Y) X^5 * exp(-X^2 - Y^2);
 grad_f = @(X, Y) [
-    (5 * X.^4 - 2 * X.^6) .* exp(-X.^2 - Y.^2);   % Partial derivative w.r.t. X
-    -2 * Y .* X.^5 .* exp(-X.^2 - Y.^2)           % Partial derivative w.r.t. Y
+    (5 * X^4 - 2 * X^6) * exp(-X^2 - Y^2);   % Partial derivative w.r.t. X
+    -2 * Y * X^5 * exp(-X^2 - Y^2)           % Partial derivative w.r.t. Y
 ];
+
 hessian_f = @(X, Y) [
-    exp(-X.^2 - Y.^2) .* (20 * X.^3 - 12 * X.^5 + 4 * X.^7), -10 * X.^4 .* Y .* exp(-X.^2 - Y.^2); 
-    -10 * X.^4 .* Y .* exp(-X.^2 - Y.^2), exp(-X.^2 - Y.^2) .* (2 * X.^5 - 2 * X.^5 .* Y.^2)
+    exp(-X^2 - Y^2) * (20 * X^3 - 12 * X^5 + 4 * X^7), -10 * X^4 * Y * exp(-X^2 - Y^2); 
+    -10 * X^4 * Y * exp(-X^2 - Y^2), exp(-X^2 - Y^2) * (2 * X^5 - 2 * X^5 * Y^2)
 ];
 
 % Initial points
