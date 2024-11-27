@@ -11,9 +11,12 @@ grad_f = @(X, Y) [
 initial_points = [0, 0; -1, 1; 1, -1]; % Points xy1, xy2, xy3
 
 % Parameters
-tolerance = 0.0000000001; % Convergence tolerance
-max_iters = 1000000; % Maximum number of iterations
+tolerance = 1e-4; % Convergence tolerance
+max_iters = 100; % Maximum number of iterations
 gamma_constant = 0.001; % Constant step size for method 1
+
+% Colors for the plots
+colors = ['r', 'g', 'b'];
 
 % Iterate over each initial point
 for idx = 1:size(initial_points, 1)
@@ -21,7 +24,12 @@ for idx = 1:size(initial_points, 1)
     Xk = initial_points(idx, 1);
     Yk = initial_points(idx, 2);
     
-    fprintf('Starting point: (%.2f, %.2f)\n', Xk, Yk);
+    % Prepare a figure
+    figure;
+    hold on;
+    title(sprintf('Steepest descend - Initial Point (%.2f, %.2f)', Xk, Yk));
+    xlabel('Iteration');
+    ylabel('f(X, Y)');
     
     for method = 1:3 % Loop through methods 1 (constant), 2 (minimization), 3 (Armijo)
         % Reset initial point for each method
@@ -29,10 +37,16 @@ for idx = 1:size(initial_points, 1)
         y = Yk;
         iter = 0;
         
+        % Store function values
+        func_values = [];
+        
         while true
             % Compute gradient
             grad = grad_f(x, y);
             grad_norm = norm(grad);
+            
+            % Track function value
+            func_values = [func_values, f(x, y)];
             
             % Check convergence
             if grad_norm < tolerance || iter >= max_iters
@@ -49,7 +63,8 @@ for idx = 1:size(initial_points, 1)
                 gamma = fminbnd(gamma_fun, 0, 1); % Minimize in range [0,1]
             elseif method == 3
                 % Case 3: Armijo's rule
-                beta = 0.5; sigma = 0.1;
+                beta = 0.5; 
+                sigma = 0.1;
                 gamma = 1;
                 while f(x - gamma * grad(1), y - gamma * grad(2)) > ...
                         f(x, y) - sigma * gamma * grad_norm^2
@@ -63,10 +78,16 @@ for idx = 1:size(initial_points, 1)
             iter = iter + 1;
         end
         
+        % Plot the convergence
+        plot(func_values, colors(method), 'DisplayName', sprintf('Method %d', method));
+        
         % Final results for this method
         fprintf('Method %d: Minimum at (%.4f, %.4f) with f(X, Y) = %.6f after %d iterations.\n', ...
             method, x, y, f(x, y), iter);
     end
     
+    % Add legend and finalize plot
+    legend;
+    hold off;
     fprintf('\n');
 end
