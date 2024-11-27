@@ -11,9 +11,9 @@ grad_f = @(X, Y) [
 initial_points = [0, 0; -1, 1; 1, -1]; % Points xy1, xy2, xy3
 
 % Parameters
-tolerance = 1e-6; % Convergence tolerance
-max_iters = 1000; % Maximum number of iterations
-gamma_constant = 0.1; % Constant step size for method 1
+tolerance = 0.0000000001; % Convergence tolerance
+max_iters = 1000000; % Maximum number of iterations
+gamma_constant = 0.001; % Constant step size for method 1
 
 % Iterate over each initial point
 for idx = 1:size(initial_points, 1)
