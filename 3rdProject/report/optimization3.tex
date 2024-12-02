@@ -2,6 +2,9 @@
 \documentclass{report}
 % dimensions of paper and relative text positioning
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+% math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
 % package for including URLs
 \usepackage{url}
 % Required for including images
@@ -34,8 +37,12 @@
 % General introduction
 \chapter{Εισαγωγή}
 \section{Γενικά}
+Η συνάρτηση που θα εξετάσουμε στο τρίτο παραδοτέο είναι η εξής:
+$$ f: \mathbb{R}^2 \to \mathbb{R},\; f(x) = \frac{1}{3} x_1^2 + 3x_2^2,\; x = [x_1 x_2]^T$$
 
-% 
+
+
+% Steepest Descent: Various constant steps
 \chapter{Θέμα 1}
 \section{Εκφώνηση}
 Να χρησιμοποιηθεί η Μέθοδος Μέγιστης Καθόδου (προηγούμενη εργασία) με ακρίβεια $\epsilon =
@@ -47,10 +54,20 @@
     \item iv) $\gamma_k$ = 5
 \end{itemize}
 και οποιοδήποτε αρχικό σημείο εκκίνησης διαφορετικό του $(0,0)$. Τι παρατηρείτε
-\selectlanguage{english};\selectlanguage{greek}
-\section{Λύση} 
-Να αποδειχθούν τα αποτελέσματα αυτά με μαθηματική αυστηρότητα.
+\selectlanguage{english};\selectlanguage{greek} Να αποδειχθούν τα αποτελέσματα αυτά 
+με μαθηματική αυστηρότητα.
 \section{Λύση}
+Επέλεξα το σημείο εκκίνησης $(-1,1)$ ως το πιο ενδιαφέρον σημείο που εξετάσαμε στο δεύτερο παραδοτέο.
+Το διάγραμμα που προκύπτει από την εκτέλεση του αλγορίθμου Μέγιστης Καθόδου με διάφορα σταθερά βήματα είναι
+το εξής:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/thema1.png}
+    \caption{Διάγραμμα Μέγιστης Καθόδου με διάφορα σταθερά βήματα}
+\end{figure}
+
+\subsection{Μαθηματική Απόδειξη}
+
 
 \subsection{Εισαγωγή Περιορισμών}
 Θεωρήστε τώρα τους περιορισμούς:
