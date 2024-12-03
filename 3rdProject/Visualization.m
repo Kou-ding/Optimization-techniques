@@ -6,7 +6,7 @@ y = linspace(-100, 100, 100);
 [X, Y] = meshgrid(x, y);
 
 % Define the function f(x, y)
-Z = (1/3) * X^2 + 3 * Y^2;
+Z = (1/3) .* X.^2 + 3 .* Y.^2;
 
 % Create a 3D surface plot
 figure;
@@ -23,6 +23,3 @@ shading interp; % Smooth color transition
 colormap jet; % Use a colorful colormap
 colorbar; % Show color scale
 grid on;
-
-% Save figure as an image
-saveas(gcf, './report/media/visualize.png');
