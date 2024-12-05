@@ -1,41 +1,86 @@
 clc; clear;
 
 % Define the function and its gradient
-f = @(x, y) (1/3) * x.^2 + 3 * y.^2;  % Example quadratic function
-grad_f = @(x, y) [(2/3) * x; 6 * y]; % Gradient of f
+f = @(x1, x2) (1/3) * x1.^2 + 3 * x2.^2;  % Example quadratic function
+grad_f = @(x1, x2) [(2/3) * x1; 6 * x2]; % Gradient of f
 
 % Parameters
-tolerance = 0.01; % Convergence tolerance
 max_iters = 1000; % Maximum number of iterations
-gamma_k = 0.5;    % Step size
-bounds = [-10, 5; -8, 12]; % Bounds for x and y
-x_k = [-5; 5];    % Initial point (x, y)
-s_k = 5;          % Fixed step size (not explicitly used in the algorithm)
+bounds = [-10, 5; -8, 12]; % Bounds for x1 and x2
+tolerance = 0.01; % Convergence tolerance
+gamma_k = [0.5, 0.1, 0.2]; % Step size
+s_k = [5, 15, 0.1]; % Projection step size
 
-% Gradient Descent with Projection
-for k = 1:max_iters
-    % Compute gradient
-    grad = grad_f(x_k(1), x_k(2));
+% Initial point
+x1k = [-5, -5, 8];
+x2k = [5, 10, -10]; 
+
+% Steepest descend variation 
+variation = 1;
+
+% Reset initial point for each method
+x1 = x1k(variation);
+x2 = x2k(variation);
+
+% Prepare a figure
+figure;
+hold on;
+title(sprintf('Steepest Descent with Projection - Initial Point (%.2f, %.2f)', x1, x2));
+xlabel('Iteration');
+ylabel('f(x_1, x_2)');
+
+% Initialize iteration counter
+iter = 0;
+
+% Store function values
+func_values = [];
+
+% Steepest Descent Algorithm with Projection
+while true
+    % Compute the gradient
+    grad = grad_f(x1, x2);
+    grad_norm = norm(grad);
     
-    % Update step
-    x_next = x_k - gamma_k * grad;
-    
-    % Apply projection
-    x_next(1) = min(max(x_next(1), bounds(1, 1)), bounds(1, 2)); % Project x
-    x_next(2) = min(max(x_next(2), bounds(2, 1)), bounds(2, 2)); % Project y
-    
+    % Track function value
+    func_values = [func_values, f(x1, x2)];
+
     % Check convergence
-    if norm(grad) < tolerance
-        fprintf('Converged at iteration %d.\n', k);
-        fprintf('Minimum at (%.4f, %.4f) with f(x, y) = %.6f.\n', x_k(1), x_k(2), f(x_k(1), x_k(2)));
+    if grad_norm < tolerance || iter >= max_iters
         break;
     end
-    
+
     % Update variables
-    x_k = x_next;
+    x1 = x1 - gamma_k(variation) * grad(1);
+    x2 = x2 - gamma_k(variation) * grad(2);
+
+    if x1 < bounds(1,1) || x1 > bounds(1,2) || x2 < bounds(2,1) || x2 > bounds(2,2)
+        % Project x_k back into the feasible region
+        x1 = x1 - s_k(variation) * grad(1);
+        x2 = x2 - s_k(variation) * grad(2);
+
+        % Check if the new point is within the bounds
+        if x1 < bounds(1,1)
+            x1 = bounds(1,1);
+        elseif x1 > bounds(1,2)
+            x1 = bounds(1,2);
+        elseif x2 < bounds(2,1)
+            x2 = bounds(2,1);
+        elseif x2 > bounds(2,2)
+            x2 = bounds(2,2);
+        end
+    end
+
+    iter = iter + 1;
+
 end
 
-% If the maximum iterations are reached
-if k == max_iters
-    fprintf('Maximum iterations reached. Last point: (%.4f, %.4f).\n', x_k(1), x_k(2));
-end
+% Plot the convergence
+plot(func_values, 'r', 'DisplayName', sprintf('gamma = %.2f', gamma_k(variation)));
+
+% Final results for this method
+fprintf('Minimum at (%.4f, %.4f) with f(x1, x2) = %.6f after %d iterations.\n', x1, x2, f(x1, x2), iter);
+
+% Add legend and finalize plot
+legend;
+hold off;
+fprintf('\n');
