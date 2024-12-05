@@ -5,7 +5,7 @@ f = @(x1, x2) (1/3) * x1.^2 + 3 * x2.^2;  % Example quadratic function
 grad_f = @(x1, x2) [(2/3) * x1; 6 * x2]; % Gradient of f
 
 % Parameters
-max_iters = 1000; % Maximum number of iterations
+max_iters = 100; % Maximum number of iterations
 bounds = [-10, 5; -8, 12]; % Bounds for x1 and x2
 tolerance = 0.01; % Convergence tolerance
 gamma_k = [0.5, 0.1, 0.2]; % Step size
@@ -16,7 +16,7 @@ x1k = [-5, -5, 8];
 x2k = [5, 10, -10]; 
 
 % Steepest descend variation 
-variation = 1;
+variation = 2;
 
 % Reset initial point for each method
 x1 = x1k(variation);
@@ -63,7 +63,9 @@ while true
             x1 = bounds(1,1);
         elseif x1 > bounds(1,2)
             x1 = bounds(1,2);
-        elseif x2 < bounds(2,1)
+        end
+        % Check if the new point is within the bounds
+        if x2 < bounds(2,1)
             x2 = bounds(2,1);
         elseif x2 > bounds(2,2)
             x2 = bounds(2,2);

@@ -6,7 +6,7 @@ grad_f = @(x1, x2) [(2*x1)/3; 6*x2];    % Gradient of f
 
 % Parameters
 tolerance = 0.001; % Convergence tolerance
-max_iters = 5;     % Maximum number of iterations
+max_iters = 5; % Maximum number of iterations
 gamma_constant = [0.1, 0.3, 3, 5]; % Learning rates
 
 % Colors for the plots
