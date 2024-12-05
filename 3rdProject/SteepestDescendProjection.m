@@ -16,7 +16,7 @@ x1k = [-5, -5, 8];
 x2k = [5, 10, -10]; 
 
 % Steepest descend variation 
-variation = 2;
+variation = 3;
 
 % Reset initial point for each method
 x1 = x1k(variation);
@@ -49,28 +49,26 @@ while true
         break;
     end
 
-    % Update variables
-    x1 = x1 - gamma_k(variation) * grad(1);
-    x2 = x2 - gamma_k(variation) * grad(2);
+    % Project x_k back into the feasible region
+    x1_proj = x1 - s_k(variation) * grad(1);
+    x2_proj = x2 - s_k(variation) * grad(2);
 
-    if x1 < bounds(1,1) || x1 > bounds(1,2) || x2 < bounds(2,1) || x2 > bounds(2,2)
-        % Project x_k back into the feasible region
-        x1 = x1 - s_k(variation) * grad(1);
-        x2 = x2 - s_k(variation) * grad(2);
-
-        % Check if the new point is within the bounds
-        if x1 < bounds(1,1)
-            x1 = bounds(1,1);
-        elseif x1 > bounds(1,2)
-            x1 = bounds(1,2);
-        end
-        % Check if the new point is within the bounds
-        if x2 < bounds(2,1)
-            x2 = bounds(2,1);
-        elseif x2 > bounds(2,2)
-            x2 = bounds(2,2);
-        end
+    % Check if the projection is within the bounds
+    if x1_proj < bounds(1,1)
+        x1_proj = bounds(1,1);
+    elseif x1_proj > bounds(1,2)
+        x1_proj = bounds(1,2);
     end
+    % Check if the projection is within the bounds
+    if x2_proj < bounds(2,1)
+        x2_proj = bounds(2,1);
+    elseif x2_proj > bounds(2,2)
+        x2_proj = bounds(2,2);
+    end
+
+    % Update variables
+    x1 = x1 + gamma_k(variation) * (x1_proj - x1);
+    x2 = x2 + gamma_k(variation) * (x2_proj - x2);
 
     iter = iter + 1;
 
