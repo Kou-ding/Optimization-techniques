@@ -36,11 +36,16 @@
 
 % General introduction
 \chapter{Εισαγωγή}
-\section{Γενικά}
+\section{Ανάλυση Συνάρτησης $f(x)$}
 Η συνάρτηση που θα εξετάσουμε στο τρίτο παραδοτέο είναι η εξής:
 $$ f: \mathbb{R}^2 \to \mathbb{R},\; f(x) = \frac{1}{3} x_1^2 + 3x_2^2,\; x = [x_1 x_2]^T$$
-
-
+Η μορφή της στον τρισδιάστατο χώρο είναι η εξής:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{media/visual.png}
+    \caption{Οπτικοποίηση συνάρτησης $f(x,y)$}
+\end{figure} 
+Παρατηρούμε ότι η συνάρτηση σημειώνει ολικό ελάχιστο στο σημείο $(0,0)$.
 
 % Steepest Descent: Various constant steps
 \chapter{Θέμα 1}
@@ -57,18 +62,63 @@ $$ f: \mathbb{R}^2 \to \mathbb{R},\; f(x) = \frac{1}{3} x_1^2 + 3x_2^2,\; x = [x
 \selectlanguage{english};\selectlanguage{greek} Να αποδειχθούν τα αποτελέσματα αυτά 
 με μαθηματική αυστηρότητα.
 \section{Λύση}
-Επέλεξα το σημείο εκκίνησης $(-5,5)$ ως ένα σημείο αρκετά απομαρκυσμένο από το ολικό ελάχιστο, 
+Επέλεξα το σημείο εκκίνησης $(-10,-10)$ ως ένα σημείο αρκετά απομαρκυσμένο από το ολικό ελάχιστο, 
 κρίνοντας πάντα από την οπτικοποίηση της συνάρτησης στο \selectlanguage{english}Visualization.m script
 \selectlanguage{greek}. Έτσι θα μπορέσουμε να παρακολουθήσουμε καλύτερα την σύγκλιση του αλγορίθμου.
 Το διάγραμμα που προκύπτει από την εκτέλεση του αλγορίθμου Μέγιστης Καθόδου με διάφορα σταθερά βήματα 
-είναι το εξής:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{media/thema1.png}
-    \caption{Διάγραμμα Μέγιστης Καθόδου με διάφορα σταθερά βήματα}
-\end{figure}
+απέκρυβε πληροφορία οπότε αποφάσισα να το σπάσω σε δύο επιμέρους διαγράμματα το καθένα με βήματα που
+παρουσιάζουν παρόμοια συμπεριφορά:
+\begin{itemize}
+    \item Διάγραμμα που συγκλίνει στο ελάχιστο:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{media/thema1-1.png}
+        \caption{Διάγραμμα Μέγιστης Καθόδου με σταθερά βήματα: 0.1, 0.3}
+    \end{figure}
+    \item Διάγραμμα που κάθε επανάληψη απομακρύνεται ολοένα και περισσότερο από το ελάχιστο:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{media/thema1-2.png}
+        \caption{Διάγραμμα Μέγιστης Καθόδου με σταθερά βήματα: 3, 5}
+    \end{figure}
+    Σε κάθε επανάληψη η απομάκρυνση που σημειώνεται είναι αρκετά μεγαλύτερη από αυτή της
+    προηγούμενης επανάληψης έτσι ώστε το η γραφική παράσταση της $f(x,y)$ μέχρι εκείνο το 
+    σημείο να φαντάζει σαν να ταυτίζεται με τον άξονα $x'x$. 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{media/thema1-2-2.png}
+        \caption{Διάγραμμα Μέγιστης Καθόδου με σταθερά βήματα: 3, 5}
+    \end{figure}
+\end{itemize}
 
 \subsection{Μαθηματική Απόδειξη}
+Αναλυτικά έχουμε:
+$$f(x) = \frac{1}{3} x_1^2 + 3x_2^2$$
+\begin{center}
+    και
+\end{center}
+$$\frac{\partial f}{\partial x_1} = \frac{2}{3}x_1$$
+$$\frac{\partial f}{\partial x_2} = 6x_2$$
+Η εξίσωση που μας δίνει την σύγκλιση είναι:
+$$x_{k+1} = x_k - \gamma_k \nabla f(x_k)$$
+Χρησιμοποιώντας πίνακες, έχουμε:
+$$x_{k+1} = \begin{bmatrix} x_{1k} \\ x_{2k} \end{bmatrix} - \gamma_k \begin{bmatrix} \frac{2}{3}x_{1k} \\ 6x_{2k} \end{bmatrix}$$
+$$x_{k+1} = \begin{bmatrix} x_{1k} - \frac{2}{3}\gamma_k x_{1k} \\ x_{2k} - 6\gamma_k x_{2k} \end{bmatrix}$$
+$$x_{k+1} = \begin{bmatrix} (1 - \frac{2}{3}\gamma_k)x_{1k} \\ (1 - 6\gamma_k)x_{2k} \end{bmatrix}$$
+$$x_{k+1} = \begin{bmatrix} 1 - \frac{2}{3}\gamma_k & 0 \\ 0 & 1 - 6\gamma_k \end{bmatrix} \begin{bmatrix} x_{1k} \\ x_{2k} \end{bmatrix}$$
+$$x_{k+1} = M \cdot x_k$$
+
+Για να πούμε ότι για να συγκλίνει ο αλγόριθμος πρέπει η απόλυτη τιμή των ιδιοτιμών του πίνακα M: 
+$$M = \begin{bmatrix} 1 - \frac{2}{3}\gamma_k & 0 \\ 0 & 1 - 6\gamma_k \end{bmatrix}$$
+να είναι μικρότερες του 1. Οπότε:
+$$|\lambda_1|= 1 - \frac{2}{3}\gamma_k < 1$$
+$$|\lambda_2| = 1 - 6\gamma_k < 1$$
+
+Οι οποίες γίνονται:
+$$0 < \gamma_k < 3$$
+$$0 < \gamma_k < \frac{1}{3}$$
+Έτσι συνεπάγουμε ότι σωστά στο διάγραμμα παρατηρούμε σύγκλιση για τα βήματα 0.1 και 0.3 και 
+απομάκρυνση για τα βήματα 3 και 5.
 
 
 \subsection{Εισαγωγή Περιορισμών}
@@ -79,36 +129,62 @@ $$-10 <= x_1 <= 5$$
 \end{center}
 $$-8 <= x_2 <= 12$$
 
-% 
+% Steepest Descent: Projection [1]
 \chapter{Θέμα 2}
 \section{Εκφώνηση}
 Να χρησιμοποιηθεί η Μέθοδος Μέγιστης Καθόδου με Προβολή, με $s_k = 5$, $\gamma_k = 0.5$,
 σημείο εκκίνησης το $(5, -5)$ και ακρίβεια $\epsilon = 0.01$. Τι παρατηρείτε σε σχέση με το 
 Θέμα 1\selectlanguage{english};\selectlanguage{greek}
-\section{Λύση}
+
 \section{Λύση}
 
+Η γραφική αναπαράσταση των αποτελεσμάτων παραθέτεται παρακάτω:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{media/thema2.png}
+    \caption{Διάγραμμα Μέγιστης Καθόδου με προβολή $s_k = 5$, $\gamma_k = 0.5$}
+\end{figure}
+Το ακριβές σημείο που σταμάτησε ο αλγόριθμος ήταν $f(0.0, 0.0) = 0.000$ έπειτα από 
+$χχχχχ$ επαναλήψεις.
 
-% 
+% Steepest Descent: Projection [2]
 \chapter{Θέμα 3}
 \section{Εκφώνηση}
 Να χρησιμοποιηθεί η Μέθοδος Μέγιστης Καθόδου με Προβολή, με $s_k = 15$, $\gamma_k = 0.1$,
 σημείο εκκίνησης το $(-5,10)$ και ακρίβεια $\epsilon = 0.01$. Τι παρατηρείτε σε σχέση με τα Θέματα 1 
-και 2\selectlanguage{english};\selectlanguage{greek}
-\section{Λύση} Προτείνετε έναν απλό πρακτικό τρόπο ώστε η μέθοδος να συγκλίνει στο ελάχιστο.
+και 2\selectlanguage{english};\selectlanguage{greek} Προτείνετε έναν απλό πρακτικό τρόπο ώστε η 
+μέθοδος να συγκλίνει στο ελάχιστο.
+
 \section{Λύση}
+Η γραφική αναπαράσταση των αποτελεσμάτων παραθέτεται παρακάτω:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{media/thema3.png}
+    \caption{Διάγραμμα Μέγιστης Καθόδου με προβολή $s_k = 15$, $\gamma_k = 0.1$}
+\end{figure}
+Το ακριβές σημείο που σταμάτησε ο αλγόριθμος ήταν $f(0.0, 0.0) = 0.000$ έπειτα από
+$χχχχχ$ επαναλήψεις.
 
 
-% 
+% Steepest Descent: Projection [3]
 \chapter{Θέμα 4}
 \section{Εκφώνηση}
 Να χρησιμοποιηθεί η Μέθοδος Μέγιστης Καθόδου με Προβολή, με $s_k = 0.1$, $\gamma_k = 0.2$,
 σημείο εκκίνησης το $(8, -10)$ και ακρίβεια $\epsilon = 0.01$. Σε αυτή την περίπτωση, έχουμε εκ των
 προτέρων κάποια πληροφορία σχετικά με την σύγκλιση του αλγορίθμου\selectlanguage{english};
-\selectlanguage{greek}
-\section{Λύση} Να γίνει η εκτέλεση του
-αλγορίθμου. Τι παρατηρείτε\selectlanguage{english};\selectlanguage{greek}
+\selectlanguage{greek}Να γίνει η εκτέλεση του αλγορίθμου. Τι παρατηρείτε
+\selectlanguage{english};\selectlanguage{greek}
+
 \section{Λύση}
+
+Η γραφική αναπαράσταση των αποτελεσμάτων παραθέτεται παρακάτω:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{media/thema4.png}
+    \caption{Διάγραμμα Μέγιστης Καθόδου με προβολή $s_k = 0.1$, $\gamma_k = 0.2$} 
+\end{figure}
+Το ακριβές σημείο που σταμάτησε ο αλγόριθμος ήταν $f(0.0, 0.0) = 0.000$ έπειτα από
+$χχχχχ$ επαναλήψεις.
 
 % Comparison
 \chapter{Ανάλυση αποτελεσμάτων}
