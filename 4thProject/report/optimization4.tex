@@ -30,46 +30,32 @@
 % prints the title, author and date on a separate page
 \maketitle
 
-% Table of contents page
-\tableofcontents
-
 % General introduction
-\chapter{Εισαγωγή}
-\section{Γενετικοί Αλγόριθμοι}
+\section*{Γενετικοί Αλγόριθμοι}
 
 
-% 
-\chapter{Θέμα 1}
-\section{Εκφώνηση}
-
-\section{Λύση}
-
-
-% 
-\chapter{Θέμα 2}
-\section{Εκφώνηση}
-
-\section{Λύση}
+% Mathematical formulation
+\section*{Θέμα 1\\Μαθηματική Διατύπωση}
+Να δοθεί η μαθηματική διατύπωση του προβλήματος.
+\subsection*{Λύση}
 
 
-% 
-\chapter{Θέμα 3}
-\section{Εκφώνηση}
-
-\section{Λύση}
-
-
-% 
-\chapter{Σημειώσεις}
-\section{Σχόλια}
+% Genetic Algorithm
+\section*{Θέμα 2\\Γενετικός Αλγόριθμος}
+Να υλοποιηθεί ένας γενετικός αλγόριθμος στο \selectlanguage{english}
+Matlab\selectlanguage{greek} που να λύνει το πρόβλημα.
+\subsection*{Λύση}
 
 
+% Alternate 
+\section*{Θέμα 3\\Μεταβαλλόμενο \selectlanguage{english}V\selectlanguage{greek}}
+Θεωρήστε ότι ο ρυθμός εισερχομένων οχημάτων $V$ μπορεί να μεταβάλλεται μέχρι 
+$\pm 15\%$ της αρχικής του τιμής. Να επιλυθεί το πρόβλημα εκ νέου με 
+την ίδια μεθοδολογία βελτιστοποίησης. 
+\subsection*{Λύση}
 
-% Bibliography
-\nocite{*} % Include all references in the bibliography, even if they are not cited in the report
-\bibliographystyle{plain}
-\bibliography{references/references} % We have to include the references somewhere in the report for them to show here if we don't use (\nocite{*})
-\addcontentsline{toc}{chapter}{\bibname} % Add the bibliography to the table of contents
+% Comments
+\section*{Σχόλια}
 
 % End of the document
 \end{document}
