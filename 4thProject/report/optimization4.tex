@@ -102,14 +102,60 @@ Matlab\selectlanguage{greek} που να λύνει το πρόβλημα.
 Έπειτα αφού δημιουργήσουμε τους υπόλοιπους απλούς περιορισμούς που αναφέραμε και στην 
 μαθηματική διατύπωση του προβλήματος, ορίζουμε τις ρυθμίσεις του γενετικού μας αλγορίθμου:
 \begin{itemize}
-    \item \selectlanguage{english}\textbf{CreationFcn}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{CrossoverFcn}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{SelectionFcn}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{MutationFcn}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{Display}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{MaxGenerations}\selectlanguage{greek}
-    \item \selectlanguage{english}\textbf{PopulationSize}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{CreationFcn:}\selectlanguage{greek} 
+    Συγκεκριμενοποιούμε τον τρόπο δημιουργίας του αρχικού πληθυσμού. 
+    \begin{itemize}    
+        \item \selectlanguage{english}@gacreationlinearfeasible\selectlanguage{greek}
+        Ελέγχει ότι οι τιμές του αρχικού πληθυσμού είναι εντός των γραμμικών περιορισμών
+        που θέτουμε στους πίνακες $A_{eq}$ και $b_{eq}$.
+    \end{itemize}
+
+    \item \selectlanguage{english}\textbf{CrossoverFcn:}\selectlanguage{greek} 
+    Επιλέγουμε τον τρόπο διασταύρωσης των γονιδίων από τους γονείς.
+    \begin{itemize}
+        \item \selectlanguage{english}@crossoverintermediate\selectlanguage{greek}
+        Τα παιδιά προκύπτουν από την εξής σχέση: $ O = P_1 + \alpha \cdot (P_2 - P_1) $,
+        όπου $O$ είναι το παιδί, $P_1$ και $P_2$ οι γονείς και $\alpha$ ένας τυχαίος αριθμός
+        μεταξύ 0 και 1.
+    \end{itemize}
+
+    \item \selectlanguage{english}\textbf{SelectionFcn:}\selectlanguage{greek} 
+    Επιλέγουμε τον τρόπο επιλογής των γονέων.
+    \begin{itemize}
+        \item \selectlanguage{english}@selectionstochunif\selectlanguage{greek}
+        Εφαρμόζει στοχαστική ομοιόμορφη επιλογή γονέων.
+    \end{itemize}
+
+    \item \selectlanguage{english}\textbf{MutationFcn:}\selectlanguage{greek}
+    Επιλέγουμε τον τρόπο μετάλλαξης των γονιδίων.
+    \begin{itemize}
+        \item \selectlanguage{english}@mutationadaptfeasible\selectlanguage{greek}
+        Εξακριβώνει ότι οι μεταλλάξεις υπακούν στους περιορισμούς που έχουμε θέσει.
+    \end{itemize}
+
+    \item \selectlanguage{english}\textbf{Display:}\selectlanguage{greek}
+    Επιλέγουμε τι πληροφορία προβάλλεται κατά την εκτέλεση του αλγορίθμου.
+    \begin{itemize}
+        \item \selectlanguage{english}iter:\selectlanguage{greek}
+        Τυπώνεται η αναλυτική εξέλιξη του αλγορίθμου κάθε γενιά.
+    \end{itemize}
+
+    \item \selectlanguage{english}\textbf{MaxGenerations:}\selectlanguage{greek}
+    Ορίζουμε τον μέγιστο αριθμό γενεών που θα εκτελεστεί ο αλγόριθμος.
+
+    \item \selectlanguage{english}\textbf{PopulationSize:}\selectlanguage{greek}
+    Ορίζουμε το μέγεθος του πληθυσμού που συμμετέχει στον γενετικό αλγόριθμο.
 \end{itemize}
+Εκτελώντας το πρόγραμμα καταγράφουμε παράλληλα και τα $fitness levels$ ή αλλιώς την
+τιμή της συνάρτησης $g(x)$ για κάθε γενιά. Το παραγόμενο γράφημα είναι το εξής:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{media/plotV.png}
+    \caption{Τιμές της συνάρτησης $g(x)$ ανά γενιά}
+\end{figure}
+Αν και βρίσκουμε το ελάχιστο της συνάρτησης $g(x)$, η βέλτιστη λύση περιλαμβάνει μέσα και 
+τις σταθερές των δρόμων. Οπότε στο τελικό αποτέλεσμα πρέπει να προστεθεί:
+$$t_sum = \sum_{i=1}^{17} t_i$$
 
 % Alternate 
 \section*{Θέμα 3\\Μεταβαλλόμενο \selectlanguage{english}V\selectlanguage{greek}}
@@ -117,6 +163,23 @@ Matlab\selectlanguage{greek} που να λύνει το πρόβλημα.
 $\pm 15\%$ της αρχικής του τιμής. Να επιλυθεί το πρόβλημα εκ νέου με 
 την ίδια μεθοδολογία βελτιστοποίησης. 
 \subsection*{Λύση}
+Διατηρώντας τον ίδιο αλγόριθμο βελτιστοποίησης, προσθέτουμε τα δύο ακραία ενδεχόμενα 
+που προκύπτουν όταν το $V$ μεταβάλλεται κατά $\pm 15\%$ της αρχικής του τιμής.
+Οι νέες γραφικές παραστάσεις που προκύπτουν είναι οι εξής:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{media/plotVmax.png}
+    \caption{Για $Vmax = 1.15V$}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{media/plotVmin.png}
+    \caption{Για $Vmin = 0.85V$}
+\end{figure}
+Παρατηρούμε ότι για λιγότερη κίνηση εισόδου ο χρόνος διάσχισης του δικτύου είναι
+μικρότερος και αντίστοιχα για περισσότερη κίνηση εισόδου ο χρόνος διάσχισης είναι
+μεγαλύτερος. Αυτό ήταν αναμενόμενο καθώς πέφτουν ή ανεβαίνουν αντίστοιχα, ανάλογα
+την περίπτωση, οι τιμές των μεταβλητών $x_i$. 
 
 % Comments
 \section*{Σχόλια}
