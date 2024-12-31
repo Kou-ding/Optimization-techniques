@@ -47,14 +47,69 @@
 \section*{Θέμα 1\\Μαθηματική Διατύπωση}
 Να δοθεί η μαθηματική διατύπωση του προβλήματος.
 \subsection*{Λύση}
+Από το πρόβλημα μας ζητείται να ελαχιστοποιήσουμε ως προς $x_i$ τον συνολικό
+χρόνο διάσχισης του δικτύου:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{media/network.png}
+    \caption{Το οδικό δίκτυο}
+\end{figure}
 
+Η εξίσωση, που υπολογίζει τον χρόνο κίνησης στον δρόμο $i$ συναρτήσει του αριθμού 
+των οχημάτων $x_i$, περιγράφεται από την εξίσωση:
+$$f(x) = \sum_{i=1}^{17} \left( t_i + a_i \cdot \frac{x_i}{1 - \frac{x_i}{c_i}} \right)$$
+Παρατηρούμε ότι καθώς το $t_i$ παραμένει σταθερό για τον εκάστοτε δρόμο, αρκεί 
+να ελαχιστοποιήσουμε τη συνάρτηση:
+$$g(x) = \sum_{i=1}^{17} a_i \cdot \frac{x_i}{1 - \frac{x_i}{c_i}}$$
+
+Υπόψιν μας λαμβάνουμε τους εξής περιορισμούς:
+\smallskip 
+Εξισώσεις μεταξύ των $x_i$ οι οποίες προκύπτουν από την ισότητα εισόδου με εξόδου
+των κόμβων:
+\begin{itemize}
+    \item $x_1 + x_2 + x_3 + x_4 = 100$
+    \item $x_1 = x_5 + x_6$
+    \item $x_2 = x_7 + x_8$
+    \item $x_3 + x_8 + x_9 = x_{11} + x_{12}$
+    \item $x_4 = x_9 + x_{10}$
+    \item $x_6 + x_7 + x_{13} = x_{14} + x_{15}$
+    \item $x_5 + x_{14} = x_{16}$
+    \item $x_{10} + x_{11} = x_{17}$
+    \item $x_{12} + x_{15} + x_{16} + x_{17} = 100$
+\end{itemize}
+Περιορισμοί στις τιμές που μπορεί να πάρει το κάθε $x_i$:
+\begin{itemize}
+    \item $0 \leq x_i \leq c_i$
+\end{itemize}
+Και τέλος για την αποφυγή της διαίρεσης με το μηδέν κατά τον υπολογισμό της $g(x)$:
+$$g(x) = \sum_{i=1}^{17} a_i \cdot \frac{x_i}{1 - \frac{x_i}{c_i}+ \epsilon}$$
+όπου $\epsilon = 10^{-6}$.
 
 % Genetic Algorithm
 \section*{Θέμα 2\\Γενετικός Αλγόριθμος}
 Να υλοποιηθεί ένας γενετικός αλγόριθμος στο \selectlanguage{english}
 Matlab\selectlanguage{greek} που να λύνει το πρόβλημα.
 \subsection*{Λύση}
-
+Υλοποιούμε τους περιορισμούς μεταξύ των $x_i$ λόγω της εισόδου με εξόδου δικτύου 
+περνώντας όλες τις μεταβλητές από την αριστερή πλευρά και αφήνοντας τους καθαρούς
+αριθμούς από την απέναντι. Στην πράξη τα δεδομένα αυτά είναι πιο εύκολα διαχειρίσιμα 
+υπό την μορφή δύο πινάκων:
+\begin{itemize}
+    \item $A_{eq}$: Πίνακας κάθε γραμμή του οποίου περιέχει τα $x_i$ της εκάστοτε 
+    εξίσωσης (αριστερή πλευρά)
+    \item $b_{eq}$: Πίνακας που περιέχει τα καθαρά νούμερα των εξισώσεων ισότητας
+\end{itemize}
+Έπειτα αφού δημιουργήσουμε τους υπόλοιπους απλούς περιορισμούς που αναφέραμε και στην 
+μαθηματική διατύπωση του προβλήματος, ορίζουμε τις ρυθμίσεις του γενετικού μας αλγορίθμου:
+\begin{itemize}
+    \item \selectlanguage{english}\textbf{CreationFcn}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{CrossoverFcn}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{SelectionFcn}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{MutationFcn}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{Display}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{MaxGenerations}\selectlanguage{greek}
+    \item \selectlanguage{english}\textbf{PopulationSize}\selectlanguage{greek}
+\end{itemize}
 
 % Alternate 
 \section*{Θέμα 3\\Μεταβαλλόμενο \selectlanguage{english}V\selectlanguage{greek}}
