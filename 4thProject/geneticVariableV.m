@@ -46,12 +46,13 @@ function geneticVariableV()
         end
         
         % Compute actual fitness
-        f = sum(a .* (x ./ (1 - ratios)));
+        epsilon = 1e-6;
+        f = sum(a .* (x ./ (1 - ratios)+epsilon));
     end
 
     % Bounds for traffic densities (x_i)
-    lb = zeros(1, n);        % Lower bounds: x >= 0
-    ub = 0.95 * c;          % Upper bounds: x <= 0.95*c to prevent numerical issues
+    lb = zeros(1, n); % Lower bounds: x >= 0
+    ub = c;            % Upper bounds: x <= c
     
     % GA options
     options = optimoptions('ga', ...
@@ -63,19 +64,20 @@ function geneticVariableV()
         'MaxGenerations', 1000, ...
         'PopulationSize', 100, ...
         'FunctionTolerance', 1e-6, ...
-        'ConstraintTolerance', 1e-6);
+        'ConstraintTolerance', 1e-6,  ...
+        'PlotFcn', @gaplotbestf);
     
     % Run optimization for average case (nominal value)
-    beq = [V, 0, 0, 0, 0, 0, 0, 0, V];
-    [optimal_X, optimal_T] = ga(@validateAndComputeFitness, n, [], [], Aeq, beq, lb, ub, [], options);
+    % beq = [V_min, 0, 0, 0, 0, 0, 0, 0, V_min];
+    % [optimal_X, optimal_T] = ga(@validateAndComputeFitness, n, [], [], Aeq, beq, lb, ub, [], options);
     
-    % Display results
-    disp('Optimal Traffic Densities (x_i) for nominal case:');
-    disp(optimal_X);
-    fprintf('Minimum Total Traversal Time (T) for nominal case: %.4f\n', optimal_T);
+    % % Display results
+    % disp('Optimal Traffic Densities (x_i) for nominal case:');
+    % disp(optimal_X);
+    % fprintf('Minimum Total Traversal Time (T) for nominal case: %.4f\n', optimal_T);
     
     % Run optimization for worst case (maximum input)
-    beq = [V_max, 0, 0, 0, 0, 0, 0, 0, V_max];
+    beq = [V, 0, 0, 0, 0, 0, 0, 0, V];
     [worst_X, worst_T] = ga(@validateAndComputeFitness, n, [], [], Aeq, beq, lb, ub, [], options);
     
     disp('Optimal Traffic Densities (x_i) for maximum input case:');

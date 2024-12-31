@@ -53,9 +53,18 @@ function genetic()
         'MutationFcn', @mutationadaptfeasible, ...
         'Display', 'iter', ...
         'MaxGenerations', 1000, ...
-        'PopulationSize', 100);
+        'PopulationSize', 100, ...
+        'PlotFcn', @gaplotbestf);
 
     % Run Genetic Algorithm
+    % [x, fval] = ga(fitnessfcn, nvars, A, b, Aeq, beq, lb, ub, nonlcon, options)
+    % fitnessfcn: The fitness function to minimize (fitnessFunction in this case).
+    % nvars: The number of variables (17 traffic flow variables).
+    % A, b: Linear inequality constraints (not used here, so passed as empty []).
+    % Aeq, beq: Linear equality constraints (traffic flow conservation equations).
+    % lb, ub: Lower and upper bounds for variables.
+    % nonlcon: Nonlinear constraints (not used here, so passed as empty []).
+    % options: The options object created earlier, which configures how the genetic algorithm runs.
     [optimal_X, optimal_T] = ga(fitnessFunction, n, [], [], Aeq, beq, lb, ub, [], options);
 
     % Display results
