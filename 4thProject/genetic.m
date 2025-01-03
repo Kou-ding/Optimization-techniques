@@ -42,8 +42,8 @@ function genetic()
     fitnessFunction = @(x) sum(a .* (x ./ (1 - (x ./ c) + epsilon)));
 
     % Bounds for traffic densities (x_i)
-    lb = zeros(1, n); % Lower bounds: x >= 0
-    ub = c;           % Upper bounds: x <= c
+    lb = zeros(1, n);   % Lower bounds: x >= 0
+    ub = c;             % Upper bounds: x <= c
 
     % Solve using Genetic Algorithm
     options = optimoptions('ga', ...
@@ -71,5 +71,4 @@ function genetic()
     disp('Optimal Traffic Densities (x_i):');
     disp(optimal_X);
     fprintf('Minimum Total Traversal Time (T): %.4f\n', optimal_T);
-    %disp(optimal_T);
 end

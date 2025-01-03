@@ -1,4 +1,4 @@
-function geneticVariableV()
+function plot_results()
     % Number of edges (variables)
     n = 17;
     V = 100;  % Nominal incoming traffic
@@ -28,7 +28,6 @@ function geneticVariableV()
     % Define variable bounds for input/output constraints
     beq_min = [V_min, 0, 0, 0, 0, 0, 0, 0, V_min];  % Min flow constraints
     beq_max = [V_max, 0, 0, 0, 0, 0, 0, 0, V_max];  % Max flow constraints
-    beq = [V, 0, 0, 0, 0, 0, 0, 0, V];              % Nominal flow constraints
 
     % Modified fitness function with validation
     function f = validateAndComputeFitness(x)
@@ -59,13 +58,54 @@ function geneticVariableV()
         'PopulationSize', 100, ...
         'PlotFcn', @gaplotbestf);
     
-    % Run optimization for worst case, best case or nominal case [Default]: Nominal case
-    % beq = beq_min; % Uncomment to calculate the minimum input case
-    % beq = beq_max; % Uncomment to calculate the maximum input case
-    [optimal_X, optimal_T] = ga(@validateAndComputeFitness, n, [], [], Aeq, beq, lb, ub, [], options);
+    % Initialize best solution variables
+    best_X = [];
+    best_T = Inf;
+
+    % Define a range of beq values between beq_min and beq_max
+    beq_values = linspace(beq_min(1), beq_max(1), 10); % Adjust the number of steps as needed
+
+    % Initialize matrix to store optimal x and T values
+    results_matrix = zeros(18, length(beq_values));
+
+    % Run optimization for each beq value
+    for i = 1:length(beq_values)
+        beq = [beq_values(i), 0, 0, 0, 0, 0, 0, 0, beq_values(i)];
+        [optimal_X, optimal_T] = ga(@validateAndComputeFitness, n, [], [], Aeq, beq, lb, ub, [], options);
+        
+        % Update best solution if current solution is better
+        if optimal_T < best_T
+            best_X = optimal_X;
+            best_T = optimal_T;
+        end
+        
+        % Save the optimal x and T values in the matrix
+        results_matrix(1:n, i) = optimal_X;
+        results_matrix(18, i) = optimal_T;
+    end
     
-    % Display results
-    disp('Optimal Traffic Densities (x_i) for maximum input case:');
-    disp(optimal_X);
-    fprintf('Minimum Total Traversal Time (T) for maximum input case: %.4f\n', optimal_T);
+    % Plot the results
+    figure;
+    hold on; % Hold on to overlay plots
+    for i = 1:length(beq_values)
+        plot(1:n, results_matrix(1:n, i), 'DisplayName', sprintf('V = %.2f', beq_values(i)));
+    end
+    
+    % Add legend and labels
+    legend show;
+    xlabel('Variable Index');
+    ylabel('Traffic Density');
+    title('Optimal Traffic Densities for Different V Values');
+    
+    % Plot the results for optimal T values
+    figure;
+    plot(beq_values, results_matrix(18, :), '-o');
+    xlabel('V Value');
+    ylabel('Optimal Total Traversal Time (T)');
+    title('Optimal Total Traversal Time for Different V Values');
+
+    % Display best results
+    disp('Optimal Traffic Densities (x_i) for best input case:');
+    disp(best_X);
+    fprintf('Minimum Total Traversal Time (T) for best input case: %.4f\n', best_T);
 end
